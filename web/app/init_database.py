@@ -4,9 +4,9 @@ DROP TABLE IF EXISTS events
 
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
-    login TEXT,
-    password TEXT,
-    isOrganizer BOOLEAN
+    OAuth INT,
+    username TEXT,
+    password TEXT
 );
 
 INSERT INTO users (login, password, isOrganizer) VALUES
