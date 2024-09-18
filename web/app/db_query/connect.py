@@ -2,9 +2,7 @@
 import os
 import psycopg2
 from psycopg2 import extras
-import bcrypt
 
-salt = bcrypt.gensalt()
 
 user = os.environ['POSTGRES_USERNAME']
 password = os.environ['POSTGRES_PASSWORD']
