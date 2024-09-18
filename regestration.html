@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+<div class="flex max-w-4xl w-full bg-white shadow-md rounded-lg overflow-hidden">
+    <!-- Left Section -->
+    <div class="w-1/2 p-10 bg-gray-50">
+        <h2 class="text-2xl font-bold mb-4">Доступ к информационным ресурсам города Москвы</h2>
+        <p class="text-gray-600 mb-8">Официальный сайт Мэра Москвы</p>
+        <ul class="list-disc text-sm text-gray-500 ml-5">
+            <li>Для физических лиц</li>
+            <li>Для юридических лиц и ИП</li>
+            <li>Для доверенных лиц организаций</li>
+        </ul>
+        <p class="text-xs text-gray-400 mt-8">© Департамент информационных технологий города Москвы</p>
+    </div>
+
+    <!-- Right Section - Login Form -->
+    <div class="w-1/2 p-10">
+        <h2 class="text-2xl font-bold mb-6">Вход</h2>
+        <form>
+            <!-- Phone/Email/SNILS Input -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="login">
+                    Телефон, электронная почта или СНИЛС
+                </label>
+                <input id="login" type="text" placeholder="Введите данные" class="input input-bordered w-full" />
+            </div>
+
+            <!-- Password Input -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                    Пароль
+                </label>
+                <input id="password" type="password" placeholder="Введите пароль" class="input input-bordered w-full" />
+                <div class="mt-1 text-right">
+                    <a href="#" class="text-blue-500 text-sm">Восстановить пароль</a>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mb-6">
+                <button type="submit" class="btn btn-primary w-full">Войти</button>
+            </div>
+
+            <!-- Alternative Login Methods -->
+            <div class="text-center text-sm text-gray-500 mb-4">или</div>
+
+            <div class="flex gap-4 mb-4">
+                <!-- QR Code Button -->
+                <button class="btn w-full flex justify-center items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 16 16">
+                        <path d="M2 2h2v2H2V2ZM3 0h1a1 1 0 0 1 1 1v1H2V1a1 1 0 0 1 1-1Zm6 2h2v2H9V2Zm1-2h1a1 1 0 0 1 1 1v1H9V1a1 1 0 0 1 1-1ZM2 9h2v2H2V9Zm1-2h1a1 1 0 0 1 1 1v1H2v-1a1 1 0 0 1 1-1Zm6 2h2v2H9V9Zm1-2h1a1 1 0 0 1 1 1v1H9v-1a1 1 0 0 1 1-1ZM7 2H5v2h2V2ZM6 0h1a1 1 0 0 1 1 1v1H5V1a1 1 0 0 1 1-1ZM7 9H5v2h2V9Zm-1-2h1a1 1 0 0 1 1 1v1H5v-1a1 1 0 0 1 1-1Z"/>
+                    </svg>
+                    QR-код
+                </button>
+
+                <!-- Electronic Signature Button -->
+                <button class="btn w-full">Электронная подпись</button>
+            </div>
+        </form>
+        <p class="text-xs text-gray-500 text-center">
+            Рекомендуем использовать <a href="#" class="text-blue-500">режим инкогнито</a> для входа с чужого устройства
+        </p>
+    </div>
+</div>
+</body>
+</html>
