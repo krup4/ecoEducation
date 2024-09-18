@@ -1,6 +1,5 @@
 networks:
   internal-network:
-    external: true
 services:
   service:
     networks:
