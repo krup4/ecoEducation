@@ -1,6 +1,0 @@
-.venv/
-__pycache__/
-docker-compose.yml
-postgres_data
-postgres-custom-config
-.env

@@ -4,7 +4,7 @@ import psycopg2
 from psycopg2 import extras
 import bcrypt
 
-from init_database import command
+from web.app.init_database import command
 
 app = Flask(__name__)
 
@@ -28,12 +28,15 @@ with connection:
         connection.commit()
 
 
-@app.route('/api/ping', methods=['GET'])
+@app.route('/ping', methods=['GET'])
 def send():
     return jsonify({"status": "ok"}), 200
 
 
-@app.route('/api/users', methods=['GET'])
+@app.route
+
+
+@app.route('/users', methods=['GET'])
 def users():
     query = "SELECT * FROM users"
     with connection:
