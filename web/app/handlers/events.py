@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, request
+from flask import Flask, Blueprint, request, jsonify
 
 from psycopg2 import extras
 
@@ -19,9 +19,10 @@ def add():
         with connection.cursor(cursor_factory=extras.RealDictCursor) as cursor:
             cursor.execute(query)
             connection.commit()
+            return jsonify(data), 200
 
 
-@event.route('/delete', methods=['GET'])
+@event.route('/delete', methods=['POST'])
 def delete():
     uuid = request.json.get('uuid')
     query = delete_event(uuid)
@@ -31,7 +32,7 @@ def delete():
             connection.commit()
 
 
-@event.route('/edit', methods=['PUT'])
+@event.route('/edit', methods=['POSt'])
 def edit():
     uuid = request.json.get('uuid')
     query = edit_event(uuid)
