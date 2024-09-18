@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS users (
     OAuth INT,
     username TEXT,
     password TEXT,
+    rating INT,
+    uuid uuid
 );
 
 INSERT INTO users (login, password, isOrganizer) VALUES
@@ -24,5 +26,11 @@ CREATE TABLE IF NOT EXISTS events (
     tags JSON,
     description TEXT,
     photo TEXT
+);
+CREATE TABLE IF NOT EXISTS qr_sessions (
+    id SERIAL PRIMARY KEY,
+    session uuid,
+    event_id INT,
+    FOREIGN KEY (event_id) REFERENCES events(id)
 );
 """

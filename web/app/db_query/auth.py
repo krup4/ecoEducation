@@ -1,4 +1,3 @@
-
 import os
 import psycopg2
 from psycopg2 import extras
@@ -17,7 +16,16 @@ connection = psycopg2.connect(user=user,
                               port=port,
                               database=database)
 
-with connection:
-    with connection.cursor(cursor_factory=extras.RealDictCursor) as cursor:
-        cursor.execute(command)
-        connection.commit()
+
+def login():
+    pass
+
+def register():
+    pass
+
+
+
+
+
+
+
