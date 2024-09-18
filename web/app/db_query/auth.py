@@ -35,14 +35,14 @@ def auth(username, password):
     else:
         return False
 
-def register(username, password, rating):
+def register(username, password, full_name, rating):
     try:
         data = login(username)
         #check if user exists
         print(data)
         uuid = str(uuid.uuid4())
         cur = connection.cursor()
-        cur.execute("INSERT INTO users (username, password, rating, uuid) VALUES (%s, %s, %s, %s)", (username, password, rating, uuid))
+        cur.execute("INSERT INTO users (username, password, full_name, rating, uuid) VALUES (%s, %s, %s, %s, %s)", (username, password, full_name, rating, uuid))
         cur.commit()
         cur.close()
     except:

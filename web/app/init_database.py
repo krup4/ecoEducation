@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     username TEXT,
     password TEXT,
+    full_name TEXT,
     rating INT,
     uuid UUID
 );
