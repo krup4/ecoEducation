@@ -11,22 +11,17 @@ CREATE TABLE IF NOT EXISTS users (
     uuid uuid
 );
 
-INSERT INTO users (login, password, isOrganizer) VALUES
-    ('Afghanistan','iudvb', TRUE),
-    ('oivnoerv','fduivodfv', FALSE),
-    ('osidnv','iusdvs',TRUE);
-
 CREATE TABLE IF NOT EXISTS events (
     id SERIAL PRIMARY KEY,
+    uuid uuid,
     time TIMESTAMP,
-    latitude DECIMAL(9,6),
-    longitude DECIMAL(9,6),
+    adress TEXT,
     name TEXT,
     cost INT,
     tags JSON,
     description TEXT,
-    photo TEXT
 );
+
 CREATE TABLE IF NOT EXISTS qr_sessions (
     id SERIAL PRIMARY KEY,
     session uuid,
