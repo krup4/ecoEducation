@@ -1,5 +1,6 @@
 command = """
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS qr_sessions;
 DROP TABLE IF EXISTS events;
 
 CREATE TABLE IF NOT EXISTS users (
