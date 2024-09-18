@@ -1,3 +1,5 @@
+
+#SQL INJECTION ALERT 🚨🚨🚨🚨🚨🚨
 def insert_event(time, uuid, adress, name, cost, tags, description):
     return f"INSERT INTO events (time, latitude, longitude, name, cost, tags, description) VALUES ('{uuid}', '{time}', '{adress}', '{name}', {cost}, '{tags}', '{description}')"
 

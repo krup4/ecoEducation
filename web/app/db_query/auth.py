@@ -3,8 +3,10 @@ import psycopg2
 from psycopg2 import extras
 import bcrypt
 import uuid
+from argon2 import PasswordHasher
 
 salt = bcrypt.gensalt()
+ph = PasswordHasher()
 
 user = os.environ['POSTGRES_USERNAME']
 password = os.environ['POSTGRES_PASSWORD']
@@ -26,6 +28,12 @@ def login(username):
     cur.close()
     return data
 
+def auth(username, password):
+    data = login(username)
+    if ph.verify(data["password"], password):
+        return True
+    else:
+        return False
 
 def register(username, password, rating):
     try:
