@@ -16,8 +16,3 @@ connection = psycopg2.connect(user=user,
                               host=host,
                               port=port,
                               database=database)
-
-
-
-
-

@@ -7,7 +7,7 @@ from db_query.events_queries import *
 
 from random import randint
 
-event = Blueprint("event", __name__)
+event = Blueprint("event", __name__, url_prefix="/event")
 
 
 @event.route("/add", methods=['POST'])
@@ -32,7 +32,7 @@ def delete():
             connection.commit()
 
 
-@event.route('/edit', methods=['POSt'])
+@event.route('/edit', methods=['POST'])
 def edit():
     uuid = request.json.get('uuid')
     query = edit_event(uuid)
@@ -40,3 +40,13 @@ def edit():
         with connection.cursor(cursor_factory=extras.RealDictCursor) as cursor:
             cursor.execute(query)
             connection.commit()
+
+
+@event.route("/show", methods=['GET'])
+def show():
+    query = "SELECT * FROM events"
+    with connection:
+        with connection.cursor(cursor_factory=extras.RealDictCursor) as cursor:
+            cursor.execute(query)
+            data = cursor.fetchall()
+            return jsonify(data), 200
