@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     OAuth INT,
     username TEXT,
-    password TEXT
+    password TEXT,
 );
 
 INSERT INTO users (login, password, isOrganizer) VALUES
