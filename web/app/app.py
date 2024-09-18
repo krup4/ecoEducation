@@ -4,7 +4,7 @@ import psycopg2
 from psycopg2 import extras
 import bcrypt
 
-from web.app.init_database import command
+from init_database import command
 
 app = Flask(__name__)
 
@@ -33,7 +33,6 @@ def send():
     return jsonify({"status": "ok"}), 200
 
 
-@app.route
 
 
 @app.route('/users', methods=['GET'])
