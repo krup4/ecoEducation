@@ -2,6 +2,7 @@ import os
 import psycopg2
 from psycopg2 import extras
 import bcrypt
+import uuid
 
 salt = bcrypt.gensalt()
 
@@ -16,13 +17,29 @@ connection = psycopg2.connect(user=user,
                               port=port,
                               database=database)
 
+ 
 
-def login():
-    pass
+def login(username):
+    cur = connection.cursor()    
+    cur.execute("SELECT * FROM users WHERE username=\"%s\"", (username))
+    data = cur.fetchone()
+    cur.close()
+    return data
 
-def register():
-    pass
 
+def register(username, password, rating):
+    try:
+        data = login(username)
+        #check if user exists
+        print(data)
+        uuid = str(uuid.uuid4())
+        cur = connection.cursor()
+        cur.execute("INSERT INTO users (username, password, rating, uuid) VALUES (%s, %s, %s, %s)", (username, password, rating, uuid))
+        cur.commit()
+        cur.close()
+    except:
+        return BrokenPipeError
+    
 
 
 
