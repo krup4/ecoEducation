@@ -1,0 +1,24 @@
+{
+  "name": "qr_service",
+  "version": "1.0.0",
+  "description": "Innovative service for QR websocketing",
+  "main": "qr_server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "."
+  },
+  "keywords": [
+    "qr"
+  ],
+  "author": "NinVoido",
+  "license": "MIT",
+  "dependencies": {
+    "postgres": "^3.4.4",
+    "qrcodejs": "^1.0.0",
+    "uuidv4": "^6.2.13",
+    "ws": "^8.18.0"
+  }
+}
