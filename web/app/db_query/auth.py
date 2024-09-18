@@ -1,11 +1,9 @@
 import os
 import psycopg2
 from psycopg2 import extras
-import bcrypt
 import uuid
 from argon2 import PasswordHasher
 
-salt = bcrypt.gensalt()
 ph = PasswordHasher()
 
 user = os.environ['POSTGRES_USERNAME']

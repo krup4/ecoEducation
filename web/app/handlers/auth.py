@@ -14,6 +14,12 @@ def login():
         return jsonify({"error":"incorrect login/password"})
 
 @auth.route('/register', methods = ["POST"])
-def register():
-    username = request.json.get("login")
-    
+def register_user():
+    username = request.json.get("username")
+    password = request.json.get("password")
+    full_name = request.json.get("full_name")
+    try:
+        register(username, password, full_name, 0)
+        return jsonify({"result":"OK"})
+    except:
+        return jsonify({"result":"SOMETHING WORK"})
