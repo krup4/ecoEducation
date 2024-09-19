@@ -11,7 +11,7 @@ def login():
     password = request.json.get("password")
     # return jsonify({"asdf":auth_check(username, password)})
     if auth_check(username, password):
-        return jsonify({"status": "ok"}), 200
+        return jsonify({"jwt": encode_jwt(username)}), 200
     else:
         return jsonify({"error": "incorrect login/password"}), 400
 
@@ -21,8 +21,7 @@ def register_user():
     username = request.json.get("username")
     password = request.json.get("password")
     full_name = request.json.get("full_name")
-    try:
-        return jsonify({"asf": register(username, password, full_name, 0)})
-        return jsonify({"result": "OK"}), 200
-    except:
-        return jsonify({"result": "SOMETHING WORKS WRONG"}), 400
+    
+    #return jsonify({"asf": register(username, password, full_name, 0)})
+    return jsonify({"jwt": encode_jwt(username)}), 200
+    

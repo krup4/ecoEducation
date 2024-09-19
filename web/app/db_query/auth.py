@@ -38,18 +38,14 @@ def auth_check(username, password):
 
 
 def register(username, password, full_name, rating):
-    try:
-        data = login(username)
-        # check if user exists
-        print(data)
-        crazy = uuid.uuid4()
-        cur = connection.cursor()
-        h = ph.hash(password)
-        # return (username, str(h), full_name, rating, crazy)
-        cur.execute("INSERT INTO users (username, password, full_name, rating, uuid) VALUES (%s, %s, %s, %s, %s)",
-                    (username, str(h), full_name, rating, crazy))
-        cur.commit()
-        cur.close()
+    data = login(username)
+    # check if user exists
+    if (data != None):
+        return
+    cur = connection.cursor()
+    # return (username, str(h), full_name, rating, crazy)
+    cur.execute(f"INSERT INTO users (username, password, full_name, rating, uuid) VALUES ('{username}', '{ph.hash(password)}', '{full_name}', '{rating}', '{uuid.uuid4()}')", #sql injection alert
+    )
+    connection.commit()
+    cur.close()
 
-    except:
-        return BrokenPipeError
