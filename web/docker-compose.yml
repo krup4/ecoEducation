@@ -48,3 +48,16 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.http-catchall.rule=HostRegexp(`{host:.+}`)"
+  front_server:
+    networks:
+      - internal-network
+    container_name: static_ws
+    image: static-web-server:2
+    volumes: ./www:/public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`greeneduinitiative.ru`)"
+      - "traefik.docker.network=internal-network"
+      - "traefik.http.routers.backend.tls=true"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.services.backend.loadbalancer.server.port=8787"
