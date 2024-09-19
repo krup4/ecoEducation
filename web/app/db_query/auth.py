@@ -20,7 +20,7 @@ connection = psycopg2.connect(user=user,
 
 def login(username):
     cur = connection.cursor()
-    cur.execute("SELECT * FROM users WHERE username=(%s)", (username,))
+    cur.execute(f"SELECT * FROM users WHERE username = '{username}'")
     data = cur.fetchone()
     cur.close()
     return data
