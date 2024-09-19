@@ -52,7 +52,7 @@ services:
     networks:
       - internal-network
     container_name: static_ws
-    image: static-web-server:2
+    image: joseluisq/static-web-server:2
     volumes: 
       - ./www:/public
     labels:
