@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход организаторов мероприятий</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+<div class="flex max-w-6xl w-full bg-white shadow-md rounded-lg overflow-hidden">
+    <!-- Left Section -->
+    <div class="w-full md:w-1/2 p-10 bg-gray-50">
+        <h2 class="text-2xl font-bold mb-4">Вход организаторов мероприятий</h2>
+        <p class="text-gray-600 mb-8">Пожалуйста, войдите в систему, чтобы получить доступ к инструментам для организации мероприятий.</p>
+        <ul class="list-disc text-sm text-gray-500 ml-5">
+            <li>Управление мероприятиями</li>
+            <li>Просмотр статистики</li>
+            <li>Контроль участников</li>
+            <li>Для получения логина напишите на почту sobyanin@mos.ru</li>
+        </ul>
+    </div>
+
+    <!-- Right Section - Login Form -->
+    <div class="w-full md:w-1/2 p-10">
+        <div id="login-form">
+            <h2 class="text-2xl font-bold mb-6">Вход</h2>
+            <form id="login">
+                <!-- Email Input -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="login-email">
+                        Электронная почта
+                    </label>
+                    <input id="login-email" type="email" placeholder="Введите электронную почту" class="input input-bordered w-full" required />
+                </div>
+
+                <!-- Password Input -->
+                <div class="mb-4 relative">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="login-password">
+                        Пароль
+                    </label>
+                    <input id="login-password" type="password" placeholder="Введите пароль" class="input input-bordered w-full" required />
+                    <button type="button" class="absolute inset-y-0 right-0 flex items-center pr-3" onclick="togglePasswordVisibility('login-password')">
+                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9 9 9-9-9-9-9 9z"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mb-6">
+                    <button type="submit" class="btn btn-primary w-full">Войти</button>
+                </div>
+
+                <!-- Forgot Password Link -->
+                <div class="text-right mb-4">
+                    <a href="#" class="text-blue-500 text-sm">Восстановить пароль</a>
+                </div>
+
+                <!-- Alternate Login Methods -->
+                <div class="text-center text-sm text-gray-500 mb-4">или войти с помощью:</div>
+
+                <div class="flex gap-4 mb-4">
+                    <!-- QR Code Button -->
+                    <button class="btn w-full flex justify-center items-center gap-2">
+                        <span class="text-sm">Госуслуги</span>
+                    </button>
+
+                    <!-- Electronic Signature Button -->
+                    <button class="btn w-full">Электронная подпись</button>
+                </div>
+            </form>
+            <p class="text-xs text-gray-500 text-center">
+                Рекомендуем использовать <a href="#" class="text-blue-500">режим инкогнито</a> для входа с чужого устройства
+            </p>
+        </div>
+    </div>
+</div>
+<script>
+    function togglePasswordVisibility(id) {
+        const passwordField = document.getElementById(id);
+        const type = passwordField.type === 'password' ? 'text' : 'password';
+        passwordField.type = type;
+    }
+
+    // Organizer login form submission
+    document.getElementById('login').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+
+        fetch('/api/organizer-login', {  // Updated URL
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/organizer-dashboard'; // Redirect after successful login
+                } else {
+                    alert(data.message); // Show error message
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
+
+</body>
+</html>

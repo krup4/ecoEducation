@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить Ивент</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet">
+</head>
+<body class="bg-base-200 flex justify-center items-center h-screen">
+
+<div class="card w-96 bg-base-100 shadow-xl">
+    <div class="card-body">
+        <h2 class="card-title">Добавить Ивент</h2>
+        <form id="event-form">
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Название ивента</span>
+                </label>
+                <input type="text" id="event-name" placeholder="Введите название" class="input input-bordered" required>
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Описание</span>
+                </label>
+                <textarea id="event-description" placeholder="Введите описание" class="textarea textarea-bordered" required></textarea>
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Дата и время</span>
+                </label>
+                <input type="datetime-local" id="event-date" class="input input-bordered" required>
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Адрес</span>
+                </label>
+                <input type="text" id="event-address" placeholder="Введите адрес" class="input input-bordered" required>
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Стоимость в баллах</span>
+                </label>
+                <input type="number" id="event-cost" placeholder="Введите стоимость" class="input input-bordered" required min="0">
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Теги</span>
+                </label>
+                <input type="text" id="event-tags" placeholder="Введите теги через запятую" class="input input-bordered">
+            </div>
+            <div class="form-control mt-4">
+                <button type="submit" class="btn btn-primary">Добавить</button>
+            </div>
+        </form>
+        <div id="response-message" class="text-success mt-4 hidden">Ивент успешно добавлен!</div>
+        <div id="error-message" class="text-error mt-4 hidden">Ошибка при добавлении ивента!</div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('event-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        // Получаем значения из формы
+        const name = document.getElementById('event-name').value;
+        const description = document.getElementById('event-description').value;
+        const date = document.getElementById('event-date').value;
+        const address = document.getElementById('event-address').value;
+        const cost = parseInt(document.getElementById('event-cost').value, 10);
+        const tags = document.getElementById('event-tags').value.split(',').map(tag => tag.trim());
+
+        try {
+            const response = await fetch('https://your-backend-url/api/events', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: name,
+                    description: description,
+                    date: date,
+                    address: address,
+                    cost: cost,
+                    tags: tags,
+                }),
+            });
+
+            if (response.ok) {
+                document.getElementById('response-message').classList.remove('hidden');
+                document.getElementById('error-message').classList.add('hidden');
+                document.getElementById('event-form').reset();
+            } else {
+                throw new Error('Ошибка при добавлении ивента');
+            }
+        } catch (error) {
+            document.getElementById('error-message').classList.remove('hidden');
+            document.getElementById('response-message').classList.add('hidden');
+            console.error(error);
+        }
+    });
+</script>
+
+</body>
+</html>

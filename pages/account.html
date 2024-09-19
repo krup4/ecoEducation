@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет</title>
+    <!-- Tailwind CSS and DaisyUI CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the dashboard */
+        .card-title {
+            @apply text-2xl font-semibold mb-4;
+        }
+        .event-list {
+            @apply list-disc pl-5;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<!-- Navigation Bar -->
+<div class="navbar bg-gray-50 px-4 text-black">
+    <div class="flex-1">
+        <a class="text-red-600 text-xl font-bold flex items-center space-x-2">
+            <span>Экопросвет</span>
+        </a>
+    </div>
+
+    <!-- Меню навигации -->
+    <div class="menu menu-horizontal space-x-4">
+        <a href="events.html" class="btn btn-ghost">Мероприятия</a>
+        <a href="map.html" class="btn btn-ghost">Карта</a>
+        <a href="profile.html" class="btn btn-ghost">Личный кабинет</a>
+    </div>
+
+    <!-- Иконка аккаунта -->
+    <div class="ml-4">
+        <a id="account-link" href="#" class="btn btn-ghost">
+            <img src="images/account-icon.png" alt="Account" class="w-8 h-8">
+        </a>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Profile Overview -->
+        <div id="profile-card" class="card bg-base-100 shadow-xl mb-8">
+            <div class="card-body">
+                <h2 class="card-title">Ваш профиль</h2>
+                <p class="text-lg font-medium">Общее количество баллов: <span id="total-points">0</span></p>
+                <p class="text-lg font-medium">Имя пользователя: <span id="user-name">Имя</span></p>
+                <p class="text-lg font-medium">Электронная почта: <span id="user-email">Электронная почта</span></p>
+            </div>
+        </div>
+
+        <!-- Completed Events -->
+        <div id="events-card" class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+                <h2 class="card-title">Пройденные мероприятия</h2>
+                <ul id="event-list" class="event-list">
+                    <!-- Events will be loaded here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer bg-gray-200 text-base-content p-10">
+    <aside>
+        <img src="../images/%5Bremoval.ai%5D_fe1dc2a3-1b69-4cb3-b6e8-a5aa0c84be56-logomain.png" alt="Логотип" style="max-width: 15%; height: auto; display: block; margin-left: -15px;">
+        <p>
+            Экопрсовет
+            <br />
+            Наш ключ к зелёному миру
+        </p>
+    </aside>
+    <nav>
+        <h6 class="footer-title">Services</h6>
+        <a class="link link-hover">Branding</a>
+        <a class="link link-hover">Design</a>
+        <a class="link link-hover">Marketing</a>
+        <a class="link link-hover">Advertisement</a>
+    </nav>
+    <nav>
+        <h6 class="footer-title">Company</h6>
+        <a class="link link-hover">About us</a>
+        <a class="link link-hover">Contact</a>
+        <a class="link link-hover">Jobs</a>
+        <a class="link link-hover">Press kit</a>
+    </nav>
+    <nav>
+        <h6 class="footer-title">Legal</h6>
+        <a class="link link-hover">Terms of use</a>
+        <a class="link link-hover">Privacy policy</a>
+        <a class="link link-hover">Cookie policy</a>
+    </nav>
+</footer>
+
+<!-- JavaScript -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('/api/user')
+            .then(response => response.json())
+            .then(data => {
+                if (data.isLoggedIn) {
+                    // Update profile information
+                    document.getElementById('total-points').textContent = data.profile.totalPoints;
+                    document.getElementById('user-name').textContent = data.profile.name;
+                    document.getElementById('user-email').textContent = data.profile.email;
+
+                    // Update events list
+                    const eventList = document.getElementById('event-list');
+                    eventList.innerHTML = '';
+                    data.completedEvents.forEach(event => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = event;
+                        eventList.appendChild(listItem);
+                    });
+
+                    // Update account link
+                    document.getElementById('account-link').href = 'profile.html'; // Or wherever you want
+                } else {
+                    // Redirect to login or registration page
+                    document.getElementById('account-link').href = 'register.html';
+                    document.getElementById('profile-card').style.display = 'none';
+                    document.getElementById('events-card').style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Error fetching user data:', error));
+    });
+</script>
+
+</body>
+</html>

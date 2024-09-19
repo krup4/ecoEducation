@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Layout Example</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/api/events')
+                .then(response => response.json())
+                .then(events => {
+                    const container = document.getElementById('card-container');
+                    events.forEach(event => {
+                        const card = document.createElement('div');
+                        card.className = 'card card-compact bg-base-100 shadow-xl';
+                        card.innerHTML = `
+                            <figure>
+                                <img src="${event.imageUrl}" alt="${event.title}" />
+                            </figure>
+                            <div class="card-body">
+                                <h2 class="card-title">${event.title}</h2>
+                                <p>${event.description}</p>
+                                <div class="card-actions justify-end">
+                                    <a href="${event.link}" class="btn btn-primary">Buy Now</a>
+                                </div>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    });
+                })
+                .catch(error => console.error('Error fetching events:', error));
+        });
+    </script>
+</head>
+<body class="bg-gray-100">
+<div class="navbar bg-gray-50 px-4 text-black">
+    <div class="flex-1">
+        <a class="text-red-600 text-xl font-bold flex items-center space-x-2">
+            <span>Экопросвет</span>
+        </a>
+    </div>
+    <div class="menu menu-horizontal space-x-4">
+        <a href="../index.html" class="btn btn-ghost">Главная</a>
+        <a href="../../node_modules/map.html" class="btn btn-ghost">Карта</a>
+    </div>
+    <div class="avatar ml-4">
+        <div class="mask mask-squircle w-12">
+            <img src="../images/boss.jpg" />
+        </div>
+    </div>
+</div>
+
+<!-- Card Layout -->
+<div class="p-4">
+    <div id="card-container" class="grid grid-cols-2 gap-4"></div>
+</div>
+
+<footer class="footer bg-gray-150 text-base-content p-10">
+    <aside>
+        <img src="images/%5Bremoval.ai%5D_fe1dc2a3-1b69-4cb3-b6e8-a5aa0c84be56-logomain.png" alt="Логотип" style="max-width: 15%; height: auto; display: block; margin-left: -15px;">
+        <p>
+            Экопросвет
+            <br />
+            Наш ключ к зелёному миру
+        </p>
+    </aside>
+    <nav>
+        <h6 class="footer-title">Навигация</h6>
+        <a class="link link-hover">Личный кабинет</a>
+        <a class="link link-hover">Карта</a>
+        <a class="link link-hover">Обмен баллов</a>
+    </nav>
+    <nav>
+        <h6 class="footer-title">О проекте</h6>
+        <a class="link link-hover">Наша миссия</a>
+        <a class="link link-hover">Контакты</a>
+        <a class="link link-hover">Обратная связь</a>
+    </nav>
+    <nav>
+        <h6 class="footer-title">Доп информация</h6>
+        <a class="link link-hover">Правила пользования</a>
+        <a class="link link-hover">Политика конфиденциальности</a>
+        <a class="link link-hover">Куки</a>
+    </nav>
+</footer>
+</body>
+</html>
