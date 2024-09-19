@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Example</title>
+    <!-- Tailwind CSS и DaisyUI CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .mission-section {
+            position: relative;
+            height: 100vh;
+            background: url('images/moscow.jpg') no-repeat center center;
+            background-size: cover;
+        }
+        .text-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+        .mission-title {
+            font-family: 'Golos Text', sans-serif;
+            color: #ffffff;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .mission-description {
+            font-family: 'Golos Text', sans-serif;
+            color: #ffffff;
+            font-size: 1.125rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<!-- Navigation Bar -->
+<div class="navbar bg-gray-50 px-4 text-black">
+    <div class="flex-1">
+        <a class="text-red-600 text-xl font-bold flex items-center space-x-2">
+            <span>Экопросвет</span>
+        </a>
+    </div>
+
+    <!-- Меню навигации -->
+    <div class="menu menu-horizontal space-x-4">
+        <a href="pages/events.html" class="btn btn-ghost">Мероприятия</a>
+        <a href="pages/map.html" class="btn btn-ghost">Карта</a>
+    </div>
+
+    <!-- Иконка аккаунта с выпадающим меню -->
+    <div class="ml-4 dropdown dropdown-end">
+        <label tabindex="0" class="btn btn-ghost avatar" id="user-avatar">
+            <div class="mask mask-squircle w-12">
+                <img id="user-photo" src="images/default-avatar.jpg" />
+            </div>
+        </label>
+        <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52" id="user-menu" style="display:none;">
+            <li><a href="/eco/pages/account.html">Личный кабинет</a></li>
+            <li><a id="logout-btn" href="#">Выйти</a></li>
+        </ul>
+        <a href="/eco/pages/registration.html" class="btn btn-primary" id="login-link" style="display:none;">Войти</a>
+    </div>
+</div>
+
+<!-- Основное содержимое -->
+<div class="diff aspect-[16/9]">
+    <div class="diff-item-1">
+        <img alt="daisy" src="images/1.jpg" />
+    </div>
+    <div class="diff-item-2">
+        <img alt="daisy" src="images/park.jpg">
+    </div>
+    <div class="diff-resizer"></div>
+</div>
+
+<!-- Миссия сайта -->
+<div class="mission-section">
+    <div class="text-overlay ">
+        <h2 class="mission-title">Наша миссия</h2>
+        <p class="mission-description">Мы стремимся к созданию устойчивого будущего, продвигая экологически чистые решения и осведомленность о защите окружающей среды. Наш сайт предлагает ресурсы и поддержку для тех, кто хочет внести свой вклад в защиту планеты. Присоединяйтесь к нам в этом важном деле и помогите создать более чистую и здоровую планету для будущих поколений.</p>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer bg-gray-150 text-base-content p-10">
+    <aside>
+        <img src="images/logo.png" alt="Логотип" style="max-width: 15%; height: auto; display: block; margin-left: -15px;">
+        <p>
+            Экопросвет
+            <br />
+            Наш ключ к зелёному миру
+        </p>
+    </aside>
+    <nav>
+        <h6 class="footer-title">Навигация</h6>
+        <a class="link link-hover">Личный кабинет</a>
+        <a class="link link-hover">Карта</a>
+        <a class="link link-hover">Обмен баллов</a>
+    </nav>
+    <nav>
+        <h6 class="footer-title">О проекте</h6>
+        <a class="link link-hover">Наша миссия</a>
+        <a class="link link-hover">Контакты</a>
+        <a class="link link-hover">Обратная связь</a>
+    </nav>
+    <nav>
+        <h6 class="footer-title">Доп информация</h6>
+        <a class="link link-hover">Правила пользования</a>
+        <a class="link link-hover">Политика конфиденциальности</a>
+        <a class="link link-hover">Куки</a>
+    </nav>
+</footer>
+
+<!-- JavaScript -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const userAvatar = document.getElementById('user-avatar');
+        const userPhoto = document.getElementById('user-photo');
+        const userMenu = document.getElementById('user-menu');
+        const loginLink = document.getElementById('login-link');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        // Функция для проверки авторизации
+        async function checkUserSession() {
+            try {
+                const response = await fetch('/api/user/session');
+                const userData = await response.json();
+
+                if (userData.isAuthenticated) {
+                    userPhoto.src = userData.photo || 'images/default-avatar.jpg';
+                    userMenu.style.display = 'block';
+                    loginLink.style.display = 'none';
+                } else {
+                    userMenu.style.display = 'none';
+                    loginLink.style.display = 'inline-block';
+                }
+            } catch (error) {
+                console.error('Ошибка при проверке сессии:', error);
+            }
+        }
+
+        // Логика для выхода из аккаунта
+        logoutBtn.addEventListener('click', async function () {
+            try {
+                await fetch('/api/user/logout', { method: 'POST' });
+                location.reload(); // Перезагрузить страницу после выхода
+            } catch (error) {
+                console.error('Ошибка при выходе из аккаунта:', error);
+            }
+        });
+
+        // Выполняем проверку сессии при загрузке страницы
+        checkUserSession();
+    });
+</script>
+
+</body>
+</html>

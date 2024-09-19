@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Отображение парков Москвы через Leaflet</title>
+  <!-- Подключение Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <!-- Подключение Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Стили для элемента карты и навигационной панели -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background-color: #ffffff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Добавление теней для навигационной панели */
+    }
+    #map {
+      height: calc(100vh - 64px); /* Устанавливаем высоту карты с учётом высоты навигационной панели */
+      width: calc(100% - 2rem); /* Устанавливаем ширину карты с учётом отступов */
+      margin: 1rem auto; /* Добавляем отступы по бокам и центрируем карту */
+      border-radius: 0.5rem; /* Добавляем скругление углов карты */
+    }
+    .map-container {
+      position: relative;
+      height: calc(100vh - 64px); /* Высота контейнера для карты с учётом высоты навигационной панели */
+      width: 100%;
+      display: flex;
+      justify-content: center; /* Центрирование карты по горизонтали */
+      align-items: center; /* Центрирование карты по вертикали */
+    }
+    .leaflet-control-attribution {
+      display: none; /* Скрыть атрибуцию */
+    }
+    .leaflet-control-zoom {
+      display: none; /* Скрыть кнопки масштабирования */
+    }
+  </style>
+</head>
+
+<body>
+<!-- Навигационная панель -->
+<div class="navbar bg-grey shadow-md px-4">
+  <div class="flex-1">
+    <a class="text-red-600 text-xl font-bold flex items-center space-x-2">
+      <span>Экопросвет</span>
+    </a>
+  </div>
+
+  <!-- Меню навигации -->
+  <div class="menu menu-horizontal space-x-4">
+    <a href="../index.html" class="btn btn-ghost">Главная</a>
+    <a href="events.html" class="btn btn-ghost">Мероприятия</a>
+  </div>
+
+
+
+    <!-- Отступ между поиском и аватаркой -->
+    <div class="avatar ml-4">
+      <div class="mask mask-squircle w-12">
+        <img src="../images/boss.jpg" />
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Контейнер для карты -->
+<div class="map-container">
+  <div id="map"></div>
+</div>
+
+<!-- Подключение Leaflet и скрипта -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  // Создание карты Leaflet
+  var map = L.map('map').setView([55.7558, 37.6176], 12); // Координаты Москвы
+
+  // Добавление базового слоя карты
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '' // Удалить атрибуцию
+  }).addTo(map);
+
+  // Загрузка и отображение данных о парках из API Flask
+  $.getJSON("http://localhost:5000/api/parks", function (data) {
+    L.geoJSON(data, {
+      pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, {
+          radius: 8,
+          fillColor: "#228B22",
+          color: "#ffffff",
+          weight: 2,
+          fillOpacity: 0.8
+        });
+      },
+      onEachFeature: function (feature, layer) {
+        if (feature.properties && feature.properties.name) {
+          layer.bindPopup("<h3>" + feature.properties.name + "</h3>");
+        }
+        layer.addTo(map);
+      }
+    }).addTo(map);
+  });
+</script>
+
+</body>
+<footer class="footer bg-gray-150 text-base-content p-10">
+  <aside>
+    <img src="eco/imagies/logo.png" alt="Логотип" style="max-width: 15%; height: auto; display: block; margin-left: -15px;">
+    <p>
+      Экопросвет
+      <br />
+      Наш ключ к зелёному миру
+    </p>
+  </aside>
+  <nav>
+    <h6 class="footer-title">Навигация</h6>
+    <a class="link link-hover">Личный кабинет</a>
+    <a class="link link-hover">Карта</a>
+    <a class="link link-hover">Обмен баллов</a>
+  </nav>
+  <nav>
+    <h6 class="footer-title">О проекте</h6>
+    <a class="link link-hover">Наша миссия</a>
+    <a class="link link-hover">Контакты</a>
+    <a class="link link-hover">Обратная связь</a>
+  </nav>
+  <nav>
+    <h6 class="footer-title">Доп информация</h6>
+    <a class="link link-hover">Правила пользования</a>
+    <a class="link link-hover">Политика конфиденциальности</a>
+    <a class="link link-hover">Куки</a>
+  </nav>
+</footer>
+</html>
