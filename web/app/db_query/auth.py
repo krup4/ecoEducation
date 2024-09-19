@@ -17,7 +17,6 @@ connection = psycopg2.connect(user=user,
                               port=port,
                               database=database)
 
- 
 
 def login(username):
     cur = connection.cursor()    
@@ -45,10 +44,3 @@ def register(username, password, full_name, rating):
         cur.close()
     except:
         return BrokenPipeError
-    
-
-
-
-
-
-
