@@ -21,7 +21,7 @@ services:
     container_name: qr_web
     build:
       context: ./qr_service
-      dockerfile: ./qr_service/Dockerfile
+      dockerfile: ./Dockerfile
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.backend.rule=Host(`qr.greeneduinitiative.ru`)"
