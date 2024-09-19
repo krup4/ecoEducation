@@ -6,7 +6,7 @@ from db_query.connect import connection
 from db_query.organizer_queries import *
 from handle_jwt import *
 
-from uuid import uuid4
+import uuid
 
 organizer = Blueprint("organizer", __name__, url_prefix="/org")
 
@@ -19,7 +19,7 @@ def add():
             cursor.execute(query)
             temp = cursor.fetchall()
             if (len(temp) > 0):
-                return jsonify({"error": "this login used"}), 400
+                return jsonify({"error": "this login is used"}), 400
 
     data = request.json
     if ('proof' not in data.keys()):

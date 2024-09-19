@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify
 from db_query.auth import *
 from handle_jwt import *
 
@@ -22,7 +22,7 @@ def register_user():
     password = request.json.get("password")
     full_name = request.json.get("full_name")
     try:
-        return jsonify({"asf": register(username, password, full_name, 0)})
-        return jsonify({"result": "OK"}), 200
+        return jsonify({"asf": register(username, password, full_name, 0)}), 200
+        # return jsonify({"result": "OK"}), 200
     except:
         return jsonify({"result": "SOMETHING WORKS WRONG"}), 400
