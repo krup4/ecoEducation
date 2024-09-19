@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 
 from handlers.events import event
-from handler.auth import auth
+from handlers.auth import auth
 
 from db_query.connect import connection
 from psycopg2 import extras
