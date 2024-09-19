@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 
 from handlers.events import event
 from handlers.auth import auth
@@ -19,6 +19,7 @@ with connection:
 app.register_blueprint(event)
 app.register_blueprint(auth)
 app.register_blueprint(organizer)
+
 
 @app.route('/ping', methods=['GET'])
 def send():
