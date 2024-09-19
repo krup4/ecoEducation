@@ -21,14 +21,16 @@ connection = psycopg2.connect(user=user,
 
 def login(username):
     cur = connection.cursor()    
-    cur.execute("SELECT * FROM users WHERE username=\"%s\"", (username))
+    cur.execute("SELECT * FROM users WHERE username=(%s)", (username,))
     data = cur.fetchone()
     cur.close()
     return data
 
-def auth(username, password):
+def auth_check(username, password):
     data = login(username)
-    if ph.verify(data["password"], password):
+    if (data == None):
+        return False
+    if ph.verify(password ,data[2]):
         return True
     else:
         return False
@@ -38,9 +40,10 @@ def register(username, password, full_name, rating):
         data = login(username)
         #check if user exists
         print(data)
-        uuid = str(uuid.uuid4())
+        crazy = str(uuid.uuid4())
         cur = connection.cursor()
-        cur.execute("INSERT INTO users (username, password, full_name, rating, uuid) VALUES (%s, %s, %s, %s, %s)", (username, password, full_name, rating, uuid))
+        hash = ph(password)
+        cur.execute("INSERT INTO users (username, password, full_name, rating, uuid) VALUES (%s, %s, %s, %s, %s)", (username, str(hash), full_name, rating, crazy))
         cur.commit()
         cur.close()
     except:
