@@ -15,7 +15,7 @@ services:
       - "traefik.http.routers.backend.tls=true"
       - "traefik.http.routers.backend.entrypoints=websecure"
       - "traefik.http.services.backend.loadbalancer.server.port=8080"
-  service:
+  qr_service:
     networks:
       - internal-network
     container_name: web
