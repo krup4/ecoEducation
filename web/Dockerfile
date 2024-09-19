@@ -16,4 +16,4 @@ ENV POSTGRES_PASSWORD=qwerty123!
 ENV POSTGRES_HOST=db
 ENV POSTGRES_PORT=5432
 
-CMD ["sh", "-c", "exec python3 -m flask run --host=0.0.0.0 --port=$SERVER_PORT"]
+CMD ["sh", "-c", "exec gunicorn --bind=0.0.0.0:$SERVER_PORT app:app"]
