@@ -1,7 +1,7 @@
 import requests
 import datetime
 
-BASE_URL = 'http://172.22.0.3:8080/event'
+BASE_URL = 'https://api.greeneduinitiative.ru/event'
 
 
 def add():
@@ -16,7 +16,7 @@ def add():
 
     response = requests.post(f"{BASE_URL}/add", json=event)
     print(response.json())
-
+    return response.json()
 
 def delete(uuid):
     event = {
@@ -39,5 +39,5 @@ def edit(uuid):
 
 
 # edit("b990284c-bc23-44c3-8cfc-a2b7204bd7e5")
-delete("b990284c-bc23-44c3-8cfc-a2b7204bd7e5")
-# add()
+#delete("b990284c-bc23-44c3-8cfc-a2b7204bd7e5")
+add()
