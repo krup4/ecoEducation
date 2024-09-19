@@ -8,8 +8,12 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    ports:
-      - "8080:88"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`api.greeneduinitiative.ru`)"
+      - "traefik.docker.network=internal-network"
+      - "traefik.http.routers.backend.tls=true"
+      - "traefik.http.routers.backend.entrypoints=websecure"
   db:
     networks:
       - internal-network
@@ -19,8 +23,6 @@ services:
     volumes:
       - ./postgres_data/:/var/lib/postgresql/data
       - ./postgres-custom-config:/etc/postgresql
-    ports:
-      - "5432:52"
     env_file:
       - .env
   traefik:
