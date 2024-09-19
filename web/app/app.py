@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 
 from handlers.events import event
 from handlers.auth import auth
+from handlers.organizer import organizer
 
 from db_query.connect import connection
 from psycopg2 import extras
@@ -17,6 +18,7 @@ with connection:
 # app.register_blueprint(auth)
 app.register_blueprint(event)
 app.register_blueprint(auth)
+app.register_blueprint(organizer)
 
 @app.route('/ping', methods=['GET'])
 def send():

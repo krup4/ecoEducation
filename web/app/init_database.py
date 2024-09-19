@@ -34,6 +34,8 @@ CREATE TABLE IF NOT EXISTS qr_sessions (
 CREATE TABLE IF NOT EXISTS organizers (
     id SERIAL PRIMARY KEY,
     uuid UUID,
+    login TEXT,
+    password TEXT,
     name TEXT,
     proof TEXT,
     owned_events JSON
