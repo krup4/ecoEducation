@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration & Login Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+<div class="flex max-w-6xl w-full bg-white shadow-md rounded-lg overflow-hidden">
+    <!-- Left Section -->
+    <div class="w-full md:w-1/2 p-10 bg-gray-50">
+        <h2 class="text-2xl font-bold mb-4">Доступ к информационным ресурсам города Москвы</h2>
+        <p class="text-gray-600 mb-8">Официальный сайт Мэра Москвы</p>
+        <ul class="list-disc text-sm text-gray-500 ml-5">
+            <li><a href="organizers.html" style=color:#00aaff >Для организаторов мероприятий</a></li>
+        </ul>
+        <p class="text-xs text-gray-400 mt-8">© Департамент информационных технологий города Москвы</p>
+    </div>
+
+    <!-- Right Section - Forms -->
+    <div class="w-full md:w-1/2 p-10">
+        <div id="form-container">
+            <!-- Login Form -->
+            <div id="login-form">
+                <h2 class="text-2xl font-bold mb-6">Вход</h2>
+                <form id="login">
+                    <!-- Phone/Email/SNILS Input -->
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="login-input">
+                            Телефон, электронная почта или СНИЛС
+                        </label>
+                        <input id="login-input" type="text" placeholder="Введите данные" class="input input-bordered w-full" />
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="mb-4 relative">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="login-password">
+                            Пароль
+                        </label>
+                        <input id="login-password" type="password" placeholder="Введите пароль" class="input input-bordered w-full" />
+                        <button type="button" class="absolute inset-y-0 right-0 flex items-center pr-3" onclick="togglePasswordVisibility('login-password')">
+
+                        </button>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="mb-6">
+                        <button type="submit" class="btn btn-primary w-full">Войти</button>
+                    </div>
+
+                    <!-- Alternative Login Methods -->
+                    <div class="text-center text-sm text-gray-500 mb-4">или</div>
+
+                    <div class="flex gap-4 mb-4">
+                        <!-- QR Code Button -->
+                        <button class="btn w-full flex justify-center items-center gap-2">
+                            Госуслуги
+                        </button>
+
+                        <!-- Electronic Signature Button -->
+                        <button class="btn w-full">Электронная подпись</button>
+                    </div>
+                </form>
+                <p class="text-xs text-gray-500 text-center">
+                    Рекомендуем использовать <a href="#" class="text-blue-500">режим инкогнито</a> для входа с чужого устройства
+                </p>
+                <div class="text-center mt-4">
+                    <button id="show-register" class="text-blue-500">Регистрация</button>
+                </div>
+            </div>
+
+            <!-- Registration Form -->
+            <div id="register-form" class="hidden">
+                <h2 class="text-2xl font-bold mb-6">Регистрация</h2>
+                <form id="register">
+                    <!-- Username Input -->
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                            Имя пользователя
+                        </label>
+                        <input id="username" type="text" placeholder="Введите имя пользователя" class="input input-bordered w-full" />
+                    </div>
+
+                    <!-- Email Input -->
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                            ФИО
+                        </label>
+                        <input id="email" type="fio" placeholder="Введите ваше ФИО" class="input input-bordered w-full" />
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="mb-4 relative">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="register-password">
+                            Пароль
+                        </label>
+                        <input id="register-password" type="password" placeholder="Введите пароль" class="input input-bordered w-full" />
+                        <button type="button" class="absolute inset-y-0 right-0 flex items-center pr-3" onclick="togglePasswordVisibility('register-password')">
+
+                        </button>
+                    </div>
+
+                    <!-- Confirm Password Input -->
+                    <div class="mb-6 relative">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="confirm-password">
+                            Подтвердите пароль
+                        </label>
+                        <input id="confirm-password" type="password" placeholder="Подтвердите пароль" class="input input-bordered w-full" />
+                        <button type="button" class="absolute inset-y-0 right-0 flex items-center pr-3" onclick="togglePasswordVisibility('confirm-password')">
+
+                        </button>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="mb-6">
+                        <button type="submit" class="btn btn-primary w-full">Зарегистрироваться</button>
+                    </div>
+                </form>
+                <div class="text-center mt-4">
+                    <button id="show-login" class="text-blue-500">Уже есть аккаунт? Войти</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('login').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const login = document.getElementById('login-input').value;
+        const password = document.getElementById('login-password').value;
+
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ login, password })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/dashboard'; // Перенаправление на страницу после успешного входа
+                } else {
+                    alert(data.message); // Показать сообщение об ошибке
+                }
+            });
+    });
+
+    document.getElementById('register').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('register-password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+
+        if (password !== confirmPassword) {
+            alert('Пароли не совпадают');
+            return;
+        }
+
+        fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, email, password })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Регистрация успешна! Теперь вы можете войти.');
+                    document.getElementById('register-form').classList.add('hidden');
+                    document.getElementById('login-form').classList.remove('hidden');
+                } else {
+                    alert(data.message); // Показать сообщение об ошибке
+                }
+            });
+    });
+
+    document.getElementById('show-register').addEventListener('click', function () {
+        document.getElementById('login-form').classList.add('hidden');
+        document.getElementById('register-form').classList.remove('hidden');
+    });
+
+    document.getElementById('show-login').addEventListener('click', function () {
+        document.getElementById('register-form').classList.add('hidden');
+        document.getElementById('login-form').classList.remove('hidden');
+    });
+</script>
+
+</body>
+</html>
