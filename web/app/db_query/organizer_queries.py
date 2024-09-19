@@ -1,8 +1,6 @@
 
 # SQL INJECTION ALERT 🚨🚨🚨🚨🚨🚨
 from argon2 import PasswordHasher
-import uuid
-from psycopg2 import extras
 import psycopg2
 import os
 
