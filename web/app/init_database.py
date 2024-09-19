@@ -2,6 +2,7 @@ command = """
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS qr_sessions;
 DROP TABLE IF EXISTS events;
+DROP TABLE IF EXISTS organizers;
 
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
@@ -28,5 +29,13 @@ CREATE TABLE IF NOT EXISTS qr_sessions (
     session UUID,
     event_id INT,
     FOREIGN KEY (event_id) REFERENCES events(id)
+);
+
+CREATE TABLE IF NOT EXISTS organizers (
+    id SERIAL PRIMARY KEY,
+    uuid UUID,
+    name TEXT,
+    proof TEXT,
+    owned_events JSON
 );
 """
