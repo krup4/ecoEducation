@@ -32,7 +32,7 @@ services:
       - "--entryPoints.websecure.address=:443"
       - "--providers.docker=true"
       - "--providers.docker.endpoint=unix:///var/run/docker.sock"
-      - "--providers.file.filename=/etc/traefik.conf"
+      - "--providers.file.filename=/etc/traefik.yml"
     networks:
       - internal-network
     container_name: traefik
@@ -40,7 +40,7 @@ services:
     volumes:
       - /etc/letsencrypt/:/etc/letsencrypt/
       - /var/run/docker.sock:/var/run/docker.sock
-      - /app/traefik/traefik.conf:/etc/traefik.conf
+      - /app/traefik/traefik.yml:/etc/traefik.yml
     ports:
       - "80:80"
       - "443:443"
