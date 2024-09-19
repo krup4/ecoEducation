@@ -15,6 +15,20 @@ services:
       - "traefik.http.routers.backend.tls=true"
       - "traefik.http.routers.backend.entrypoints=websecure"
       - "traefik.http.services.backend.loadbalancer.server.port=8080"
+  service:
+    networks:
+      - internal-network
+    container_name: web
+    build:
+      context: ./qr_service
+      dockerfile: ./qr_service/Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`qr.greeneduinitiative.ru`)"
+      - "traefik.docker.network=internal-network"
+      - "traefik.http.routers.backend.tls=true"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.services.backend.loadbalancer.server.port=9000"
   db:
     networks:
       - internal-network
