@@ -13,6 +13,14 @@ organizer = Blueprint("organizer", __name__, url_prefix="/org")
 
 @organizer.route("/register", methods=['POST'])
 def add():
+    query = find_org(request.json.get('login'))
+    with connection:
+        with connection.cursor(cursor_factory=extras.RealDictCursor) as cursor:
+            cursor.execute(query)
+            temp = cursor.fetchall()
+            if (len(temp) > 0):
+                return jsonify({"error": "this login used"}), 400
+
     data = request.json
     if ('proof' not in data.keys()):
         return jsonify({"reason": "no proofs"}), 400

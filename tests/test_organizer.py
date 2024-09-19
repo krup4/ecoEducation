@@ -1,7 +1,7 @@
 import requests
 import datetime
 
-BASE_URL = 'http://172.22.0.4:8080/org'
+BASE_URL = 'http://172.22.0.2:8080/org'
 
 # id SERIAL PRIMARY KEY,
 #     uuid UUID,
@@ -44,5 +44,5 @@ def edit(uuid):
     response = requests.post(f"{BASE_URL}/edit", json=event)
     print(response.json())
 
-# reg()
-log()
+reg()
+# log()

@@ -21,6 +21,10 @@ connection = psycopg2.connect(user=user,
                               database=database)
 
 
+def find_org(loginS):
+    return f"SELECT * FROM organizers WHERE login = '{loginS}'"
+
+
 def reg_org(uuid, data):
     events = data.get('owned_events')
     right_events = '[ '
