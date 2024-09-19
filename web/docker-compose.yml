@@ -8,6 +8,8 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+    ports:
+      - "8080:88"
   db:
     networks:
       - internal-network
@@ -17,6 +19,8 @@ services:
     volumes:
       - ./postgres_data/:/var/lib/postgresql/data
       - ./postgres-custom-config:/etc/postgresql
+    ports:
+      - "5432:52"
     env_file:
       - .env
   traefik:
