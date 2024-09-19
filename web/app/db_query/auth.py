@@ -31,7 +31,7 @@ def auth_check(username, password):
     if (data is None):
         return False
     try:
-        ph.verify(data[3], password)
+        ph.verify(data[2], password)
         return True
     except:
         return False
