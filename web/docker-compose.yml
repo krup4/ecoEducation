@@ -61,4 +61,4 @@ services:
       - "traefik.docker.network=internal-network"
       - "traefik.http.routers.frontend.tls=true"
       - "traefik.http.routers.frontend.entrypoints=websecure"
-      - "traefik.http.services.frontend.loadbalancer.server.port=8787"
+      - "traefik.http.services.frontend.loadbalancer.server.port=80"
