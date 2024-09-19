@@ -27,9 +27,10 @@ def login(username):
 
 def auth_check(username, password):
     data = login(username)
-    if (data == None):
-        return False
-    if ph.verify(password ,data[2]):
+#    if (data is None):
+#        return False
+    return data
+    if ph.verify(password, data[2]):
         return True
     else:
         return False
@@ -39,11 +40,13 @@ def register(username, password, full_name, rating):
         data = login(username)
         #check if user exists
         print(data)
-        crazy = str(uuid.uuid4())
+        crazy = uuid.uuid4()
         cur = connection.cursor()
-        hash = ph(password)
-        cur.execute("INSERT INTO users (username, password, full_name, rating, uuid) VALUES (%s, %s, %s, %s, %s)", (username, str(hash), full_name, rating, crazy))
+        h = ph.hash(password)
+        #return (username, str(h), full_name, rating, crazy)
+        cur.execute("INSERT INTO users (username, password, full_name, rating, uuid) VALUES (%s, %s, %s, %s, %s)", (username, str(h), full_name, rating, crazy))
         cur.commit()
         cur.close()
+        
     except:
         return BrokenPipeError

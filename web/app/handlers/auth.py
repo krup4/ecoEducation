@@ -20,7 +20,7 @@ def register_user():
     password = request.json.get("password")
     full_name = request.json.get("full_name")
     try:
-        register(username, password, full_name, 0)
+        return jsonify({"asf":register(username, password, full_name, 0)})
         return jsonify({"result":"OK"}), 200
     except:
-        return jsonify({"result":"SOMETHING WORK"}), 400
+        return jsonify({"result":"SOMETHING WORKS WRONG"}), 400
