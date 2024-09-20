@@ -10,6 +10,7 @@ COPY ./package.json .
 COPY ./index.html .
 COPY ./index.js .
 COPY ./qr_server.js .
+COPY ./easy.qrcode.js .
 
 RUN npm i
 

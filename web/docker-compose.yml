@@ -24,11 +24,19 @@ services:
       dockerfile: ./Dockerfile
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`qr.greeneduinitiative.ru`)"
       - "traefik.docker.network=internal-network"
-      - "traefik.http.routers.backend.tls=true"
-      - "traefik.http.routers.backend.entrypoints=websecure"
-      - "traefik.http.services.backend.loadbalancer.server.port=9000"
+      - "traefik.http.routers.backend2.rule=Host(`qr.greeneduinitiative.ru`)"
+      - "traefik.http.routers.backend2.service=backend2"
+      - "traefik.http.routers.backend2.tls=true"
+      - "traefik.http.routers.backend2.entrypoints=websecure"
+      - "traefik.http.services.backend2.loadbalancer.server.port=9000"
+      - "traefik.http.routers.backend_wss.tls=true"
+      - "traefik.http.routers.backend_wss.rule=Host(`qr.greeneduinitiative.ru`) && Path(`/ws`)"
+      - "traefik.http.routers.backend_wss.service=backend_wss"
+      - "traefik.http.routers.backend_wss.entrypoints=websecure"
+      - "traefik.http.services.backend_wss.loadbalancer.server.port=7071"
+    env_file:
+      - .env
   db:
     networks:
       - internal-network

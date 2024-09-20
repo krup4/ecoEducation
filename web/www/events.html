@@ -6,33 +6,6 @@
     <title>Card Layout Example</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('/api/events')
-                .then(response => response.json())
-                .then(events => {
-                    const container = document.getElementById('card-container');
-                    events.forEach(event => {
-                        const card = document.createElement('div');
-                        card.className = 'card card-compact bg-base-100 shadow-xl';
-                        card.innerHTML = `
-                            <figure>
-                                <img src="${event.imageUrl}" alt="${event.title}" />
-                            </figure>
-                            <div class="card-body">
-                                <h2 class="card-title">${event.title}</h2>
-                                <p>${event.description}</p>
-                                <div class="card-actions justify-end">
-                                    <a href="${event.link}" class="btn btn-primary">Buy Now</a>
-                                </div>
-                            </div>
-                        `;
-                        container.appendChild(card);
-                    });
-                })
-                .catch(error => console.error('Error fetching events:', error));
-        });
-    </script>
 </head>
 <body class="bg-gray-100">
 <div class="navbar bg-gray-50 px-4 text-black">
@@ -43,7 +16,7 @@
     </div>
     <div class="menu menu-horizontal space-x-4">
         <a href="../index.html" class="btn btn-ghost">Главная</a>
-        <a href="../../node_modules/map.html" class="btn btn-ghost">Карта</a>
+        <a href="../map.html" class="btn btn-ghost">Карта</a>
     </div>
     <div class="avatar ml-4">
         <div class="mask mask-squircle w-12">
@@ -52,9 +25,40 @@
     </div>
 </div>
 
-<!-- Card Layout -->
 <div class="p-4">
-    <div id="card-container" class="grid grid-cols-2 gap-4"></div>
+    <div id="card-container" class="grid grid-cols-2 gap-4">
+        <div class="card card-compact bg-base-100 shadow-xl">
+            <figure>
+                <img src="images/zaradie.jpeg" alt="Static Event One" />
+            </figure>
+            <div class="card-body">
+                <h2 class="card-title">Экотон</h2>
+                <p>Первое в России международное соревнование для экологов, айтишников и управленцев:
+                    прими эковызов, трансформируй урбанистику
+                    и выиграй от 125 до 330 тысяч рублей!</p>
+                <p class="text-sm text-gray-500">Баллы: 200</p>
+                <p class="text-sm text-gray-500">Дата: 2024-09-18</p>
+                <div class="card-actions justify-end">
+                    <a href="#" id="registerBtn1" class="btn btn-primary" onclick="toggleRegistration(event, 'registerBtn1')">Зарегистрироваться</a>
+                </div>
+            </div>
+        </div>
+        <div class="card card-compact bg-base-100 shadow-xl">
+            <figure>
+                <img src="images/1.jpg" alt="Static Event Two" />
+            </figure>
+            <div class="card-body">
+                <h2 class="card-title">Акция чистый город</h2>
+                <p>Акция “Чистый город” направлена на улучшение состояния городской среды. В рамках мероприятия волонтёры и жители активно участвуют в уборке общественных мест, сборе мусора и высадке зелёных насаждений. Цель акции — сделать наш город чище и более комфортным для проживания</p>
+                <p class="text-sm text-gray-500">Баллы: 250</p>
+                <p class="text-sm text-gray-500">Дата: 2024-09-25</p>
+                <div class="card-actions justify-end">
+                    <a href="#" id="registerBtn2" class="btn btn-primary" onclick="toggleRegistration(event, 'registerBtn2')">Зарегистрироваться</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 <footer class="footer bg-gray-150 text-base-content p-10">
@@ -85,5 +89,52 @@
         <a class="link link-hover">Куки</a>
     </nav>
 </footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('/api/events')
+            .then(response => response.json())
+            .then(events => {
+                const container = document.getElementById('card-container');
+                events.forEach(event => {
+                    const card = document.createElement('div');
+                    card.className = 'card card-compact bg-base-100 shadow-xl';
+                    card.innerHTML = `
+                        <figure>
+                            <img src="${event.imageUrl}" alt="${event.title}" />
+                        </figure>
+                        <div class="card-body">
+                            <h2 class="card-title">${event.title}</h2>
+                            <p>${event.description}</p>
+                            <p class="text-sm text-gray-500">Points: ${event.points}</p>
+                            <p class="text-sm text-gray-500">Date: ${new Date(event.date).toLocaleDateString()}</p>
+                            <div class="card-actions justify-end">
+                                <a href="${event.link}" class="btn btn-primary">Buy Now</a>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            })
+            .catch(error => console.error('Error fetching events:', error));
+    });
+    function toggleRegistration(event, buttonId) {
+        event.preventDefault();
+
+        const button = document.getElementById(buttonId);
+
+        if (button.textContent === 'Зарегистрироваться') {
+            button.textContent = 'Отказаться от участия';
+            button.classList.remove('btn-primary');
+            button.classList.add('btn-secondary');
+            alert('Вы успешно зарегистрировались на событие!');
+        } else {
+            button.textContent = 'Зарегистрироваться';
+            button.classList.remove('btn-secondary');
+            button.classList.add('btn-primary');
+            alert('Вы отменили регистрацию на событие.');
+        }
+    }
+</script>
 </body>
 </html>

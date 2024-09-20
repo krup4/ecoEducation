@@ -1,6 +1,5 @@
 
 async function connectToServer() {
-    //const ws = new WebSocket('wss://qr.greeneduinitiative.ru:7071');
     return new Promise((resolve, reject) => {
         const timer = setInterval(() => {
             if (ws.readyState === 1) {
@@ -15,7 +14,8 @@ var qrcode;
 
 (async function() {
 
-    const ws = new WebSocket('ws://localhost:7070');
+    const ws = new WebSocket('wss://qr.greeneduinitiative.ru/ws');
+    //const ws = new WebSocket('ws://localhost:7070');
     while (ws.readyState !== 1) {
         await new Promise(r => setTimeout(r, 200));
     }
